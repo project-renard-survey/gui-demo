@@ -452,7 +452,7 @@ QLabel[enabled=&quot;true&quot;] {
     <item>
      <widget class="QStackedWidget" name="wgt_content">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="wgt_page_wallet">
        <layout class="QVBoxLayout" name="lout_page_wallet_v">
@@ -1041,6 +1041,33 @@ QLabel[enabled=&quot;true&quot;] {
              </property>
             </widget>
            </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="gbox_profile_settings">
+          <property name="font">
+           <font>
+            <family>Oswald</family>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="title">
+           <string>PROFILE SETTINGS</string>
+          </property>
+          <layout class="QVBoxLayout" name="layout_profile_settings">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
           </layout>
          </widget>
         </item>

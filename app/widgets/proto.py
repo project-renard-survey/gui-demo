@@ -17,6 +17,7 @@ from app.widgets.timestamp import WidgetTimestamping
 from app.widgets.wallet_history import WalletHistory
 from app.widgets.wallet_send import WalletSend
 from app.widgets.invite import InviteDialog
+from app.widgets.profile_settings import ProfileSettings
 
 
 log = logging.getLogger(__name__)
@@ -90,6 +91,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.check_box_exit_on_close.stateChanged['int'].connect(self.setting_changed_exit_on_close)
         self.check_manage_node.setChecked(self.profile.manage_node)
         self.check_manage_node.stateChanged['int'].connect(self.setting_changed_manage_node)
+        profile_settings = ProfileSettings(self)
+        self.layout_profile_settings.insertWidget(0, profile_settings)
 
         # Connections
         signals.getblockchaininfo.connect(self.getblockchaininfo)
