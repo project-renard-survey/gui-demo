@@ -133,16 +133,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             event.ignore()
             self.hide()
 
-    def setting_changed_exit_on_close(self, state):
-        self.profile.exit_on_close = state == 2
-        self.profile.save()
-
-    def setting_changed_manage_node(self, state):
-        self.profile.manage_node = state == 2
-        self.profile.save()
-        if self.profile.manage_node:
-            self.node.start()
-
     def node_started(self):
         self.updater.start()
 
