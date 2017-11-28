@@ -78,6 +78,28 @@ def get_timestamps(hash_value: str, stream='timestamp') -> Optional[List]:
     return timestamps
 
 
+def get_publisher_timestamps(address:str, stream='timestamp'):
+    response = get_active_rpc_client().liststreampublisheritems(stream, address, verbose=True, count=1000, start=-1000)
+    if response['error'] is not None:
+        raise RpcResponseError(response['error']['message'])
+
+    result = response['result']
+    timestamps = []
+    for entry in reversed(result):
+        if entry['data']:
+            if not isinstance(entry['data'], str):
+                log.warning('Stream item data is not a string: %s' % entry['data'])
+                # Todo investigate dict with size, txid, vout in stream item data
+                continue
+            data = ubjson.loadb(unhexlify(entry['data']))
+            comment = data.get('comment', '')
+        else:
+            comment = ''
+        timestamps.append((entry['time'], entry['key'], comment))
+
+    return timestamps
+
+
 if __name__ == '__main__':
     import app
     app.init()
