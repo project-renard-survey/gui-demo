@@ -66,7 +66,6 @@ class WidgetTimestamping(QWidget, Ui_WidgetTimestamping):
         header.setSectionResizeMode(2, QHeaderView.Stretch)
         header.setFont(font)
         self.table_my_timestamps.doubleClicked.connect(self.on_dbl_click)
-        self.button_refresh_my_timestamps.clicked.connect(self.table_my_timestamps.model().refresh_data)
 
         # Ui Tweaks
         self.table_verification.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
@@ -78,6 +77,13 @@ class WidgetTimestamping(QWidget, Ui_WidgetTimestamping):
         self.button_dropzone.clicked.connect(self.file_select_dialog)
         self.button_reset.clicked.connect(self.reset)
         self.button_register.clicked.connect(self.register_timestamp)
+
+    def showEvent(self, show_event):
+        self.table_my_timestamps.model().refresh_data()
+        signals.sync_cycle_finished.connect(self.table_my_timestamps.model().refresh_data)
+
+    def hideEvent(self, hide_event):
+        signals.sync_cycle_finished.disconnect(self.table_my_timestamps.model().refresh_data)
 
     def process_file(self, file_path):
         log.debug('proccess file %s' % file_path)
@@ -269,7 +275,7 @@ class TimestampTableModel(QAbstractTableModel):
     def __init__(self, parent):
         super().__init__(parent)
         self.profile = Profile.get_active()
-        self.data = self.load_data()
+        self.data = []
 
         self.header = ["Time", "Hash", "Comment"]
 

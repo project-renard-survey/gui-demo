@@ -86,6 +86,9 @@ def get_publisher_timestamps(address:str, stream='timestamp'):
     result = response['result']
     timestamps = []
     for entry in reversed(result):
+        if entry['confirmations'] < 1:
+            continue
+
         if entry['data']:
             if not isinstance(entry['data'], str):
                 log.warning('Stream item data is not a string: %s' % entry['data'])
